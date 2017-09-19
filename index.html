@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ZH">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>管理首页</title>
+		<!--
+		<link rel="stylesheet" href="//cdn.bootcss.com/element-ui/1.1.2/theme-default/index.css" rel="external nofollow">
+		<script src="//cdn.bootcss.com/vue/2.1.8/vue.min.js"></script>
+		<script src="//cdn.bootcss.com/element-ui/1.1.2/index.js"></script>
+		<script src="//cdn.bootcss.com/vue-resource/1.0.3/vue-resource.min.js"></script>
+		-->
+		<!-- 引入样式 -->
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-default/index.css">
+		<!-- 先引入 Vue -->
+		<script src="https://unpkg.com/vue/dist/vue.js"></script>
+		<!-- 引入组件库 -->
+		<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+		<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+	</head>
+
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		
+		.header {
+			position: relative;
+			box-sizing: border-box;
+			width: 100%;
+			height: 70px;
+			font-size: 22px;
+			line-height: 70px;
+			color: #fff;
+			background-color: #242f42;
+		}
+		
+		.header .logo {
+			float: left;
+			width: 250px;
+			text-align: center;
+		}
+		
+		.sidebar {
+			display: block;
+			position: absolute;
+			width: 250px;
+			top: 70px;
+			bottom: 0;
+			background: #2e363f;
+		}
+		
+		.content {
+			background: none repeat scroll 0 0 #fff;
+			position: absolute;
+			left: 250px;
+			right: 0;
+			top: 70px;
+			bottom: 0;
+			width: auto;
+			/*padding: 40px;*/
+			box-sizing: border-box;
+			height: auto;
+			/*overflow-y: scroll;*/
+		}
+		.autumn-iframe {
+			width: 100%;
+			overflow: visible;
+		}
+		
+	</style>
+
+	<body>
+		<div id="app">
+			<div class="wrapper">
+				<!-- 头部start -->
+				<div class="header">
+					<div class="logo">
+						后台管理系统
+					</div>
+				</div>
+				<!-- 头部end -->
+				<!-- 左边导航栏start -->
+				<div class="sidebar">
+					<el-menu theme="dark" default-active="2" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" theme="dark">
+						<el-submenu index="1">
+							<template slot="title"><i class="el-icon-message"></i>导航一</template>
+							<el-menu-item-group title="分组一">
+								<el-menu-item index="1-1">选项1</el-menu-item>
+								<el-menu-item index="1-2">选项2</el-menu-item>
+							</el-menu-item-group>
+							<el-menu-item-group title="分组2">
+								<el-menu-item index="1-3">选项3</el-menu-item>
+							</el-menu-item-group>
+							<el-submenu index="1-4">
+								<template slot="title">选项4</template>
+								<el-menu-item index="1-4-1">选项1</el-menu-item>
+							</el-submenu>
+						</el-submenu>
+						<el-menu-item index="2"><i class="el-icon-menu"></i>导航二</el-menu-item>
+						<el-menu-item index="3"><i class="el-icon-setting"></i>导航三</el-menu-item>
+					</el-menu>
+				</div>
+				<!-- 左边导航栏end -->
+				<!-- 内容区start -->
+				<div class="content">
+					<iframe frameborder="0" scrolling="yes" class="autumn-iframe" src="page/table.html"></iframe>
+				</div>
+				<!-- 内容区end -->
+			</div>
+		</div>
+	</body>
+	<script>
+		var app = new Vue({
+			el: '#app',
+			data: {},
+			methods: {
+				handleOpen: function(key, keyPath) {
+					console.log(key, keyPath);
+				},
+				handleClose: function(key, keyPath) {
+					console.log(key, keyPath);
+				}
+			}
+		});
+		
+		//iframe自适应
+		$(window).on('resize', function() {
+			var $content = $('.content');
+			$content.height($(this).height() - 110);
+		    $content.find('iframe').each(function() {
+		    	$(this).height($content.height());
+		    });
+		}).resize();
+	</script>
+
+</html>
