@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<!-- 先引入 Vue -->
+		<script src="https://unpkg.com/vue/dist/vue.js"></script>
+		<!-- 引入组件库 -->
+		<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+		<!-- 引入jquery库 -->
+		<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div>
+			<el-container id="index" style="border: 1px solid #eee">
+				<el-aside width="200px" style="background-color: #324157;">
+					<el-menu default-active="1" background-color="#324157" style="border: 0;" text-color="#fff" active-text-color="#ffd04b">>
+						<el-menu-item index="1" @click="addTab('1','首页', 'page/index.html')">
+							<template slot="title"><i class="el-icon-message"></i>首页</template>
+						</el-menu-item>
+						<el-submenu index="2">
+							<template slot="title"><i class="el-icon-setting"></i>系统管理</template>
+							<el-menu-item index="2-1" @click="addTab('3','用户管理', 'page/table.html')"><i class="el-icon-user"></i>用户管理</el-menu-item>
+							<el-menu-item index="2-2" @click="addTab('4','留言', 'page/feedback.html')"><i class="el-icon-user"></i>留言</el-menu-item>
+							<el-menu-item index="2-3" @click="addTab('5','树形表格', 'page/tree-table.html')"><i class="el-icon-user"></i>树形表格</el-menu-item>
+							<el-menu-item index="2-4" @click="addTab('6','查看日记', 'page/log.html')"><i class="el-icon-user"></i>查看日记</el-menu-item>
+						</el-submenu>
+						<el-submenu index="3">
+							<template slot="title"><i class="el-icon-setting"></i>导航三</template>
+							<el-menu-item-group>
+								<template slot="title">分组一</template>
+								<el-menu-item index="3-1">选项1</el-menu-item>
+								<el-menu-item index="3-2">选项2</el-menu-item>
+							</el-menu-item-group>
+							<el-menu-item-group title="分组2">
+								<el-menu-item index="3-3">选项3</el-menu-item>
+							</el-menu-item-group>
+							<el-submenu index="3-4">
+								<template slot="title">选项4</template>
+								<el-menu-item index="3-4-1">选项4-1</el-menu-item>
+							</el-submenu>
+						</el-submenu>
+					</el-menu>
+				</el-aside>
+
+				<el-container class="right-container">
+					<el-header style="text-align: right; font-size: 12px">
+						<el-dropdown>
+							<i class="el-icon-setting" style="margin-right: 15px"></i>
+							<el-dropdown-menu slot="dropdown">
+								<el-dropdown-item>查看</el-dropdown-item>
+								<el-dropdown-item>新增</el-dropdown-item>
+								<el-dropdown-item>删除</el-dropdown-item>
+							</el-dropdown-menu>
+						</el-dropdown>
+						<span>王小虎</span>
+					</el-header>
+
+					<el-main>
+						<!--<el-table :data="tableData">
+							<el-table-column prop="date" label="日期" width="140">
+							</el-table-column>
+							<el-table-column prop="name" label="姓名" width="120">
+							</el-table-column>
+							<el-table-column prop="address" label="地址">
+							</el-table-column>
+						</el-table>-->
+						<div id="tabs">
+							<!-- 第一个tab标签页不能被关闭，使用v-bind标签实现 -->
+							<el-tabs v-model="activeTabId" type="card" v-bind:closable="activeTabId !== '1'" @tab-remove="removeTab">
+								<el-tab-pane v-for="(item, index) in tabs" :key="item.id" :label="item.name" :name="item.id">
+									<div class="content" :id="item.id">
+										{{item.content}}
+									</div>
+								</el-tab-pane>
+						</div>
+					</el-main>
+
+					<el-footer style="background-color: gray;">Footer</el-footer>
+				</el-container>
+			</el-container>
+		</div>
+		<style>
+			.el-header {
+				background-color: cadetblue;
+				;
+				color: #333;
+				line-height: 60px;
+			}
+			
+			.right-container {
+				position: absolute;
+				top: 0;
+				left: 200px;
+				bottom: 0;
+				right: 0;
+			}
+			
+			.el-aside {
+				color: #333;
+				position: absolute;
+				left: 0;
+				top: 0;
+				bottom: 0;
+				width: 200px;
+				overflow-x: hidden;
+			}
+			
+			.el-main {
+				padding: 0;
+			}
+			
+			#tabs {
+				/*background: none repeat scroll 0 0 #fff;*/
+				/*padding: 5px, 10px;*/
+				box-sizing: border-box;
+				/*overflow-y: scroll;*/
+				height: 100%;
+				border: 1px solid #ebeef5;
+				border-top: 0;
+			}
+			
+			.content {
+				padding-left: 10px;
+			}
+		</style>
+
+		<script>
+			var index = new Vue({
+				el: "#index",
+				data: {
+					// 当前激活的id
+					activeTabId: '1',
+					// tab页
+					tabs: [],
+				},
+				mounted: function() {
+					// 加载首页
+					this.addTab('1', '首页', 'page/index.html')
+				},
+				methods: {
+					/****************************** tab页操作*************************************/
+					addTab: function(id, tabName, tabUrl) {
+						// 打开tab，如果已经打开直接激活
+						for(var i = 0; i < this.tabs.length; i++) {
+							tab = this.tabs[i];
+							if(tab.id == id) {
+								this.activeTabId = id;
+								return;
+							}
+						}
+						this.tabs.push({
+							id: id,
+							name: tabName,
+							content: ''
+						});
+						this.activeTabId = id;
+						getTemplate(id, tabUrl);
+					},
+					removeTab: function(id) {
+						if(id === '1') {
+							return;
+						}
+						var _tabs = this.tabs;
+						var _activeTabId = this.activeTabId;
+						if(_activeTabId === id) {
+							for(var i = 0; i < _tabs.length; i++) {
+								var tab = _tabs[i];
+								if(tab.id === id) {
+									var nextTab = _tabs[i + 1] || _tabs[i - 1];
+									if(nextTab) {
+										_activeTabId = nextTab.id;
+									}
+								}
+							}
+						}
+
+						this.activeTabId = _activeTabId;
+						this.tabs = []
+						for(var i = 0; i < _tabs.length; i++) {
+							tab = _tabs[i];
+							if(tab.id !== id) {
+								this.tabs.push(tab);
+							}
+						}
+					}
+					/****************************** tab页操作*************************************/
+				}
+			});
+
+			function getTemplate(id, url) {
+				$.ajax({
+					url: url,
+					async: true,
+					success: function(data) {
+						$('#' + id).html(data);
+					},
+					error: function(e) {
+						$('#' + id).html("网络异常");
+					}
+				})
+			}
+		</script>
+	</body>
+
+</html>

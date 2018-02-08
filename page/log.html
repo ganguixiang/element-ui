@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<!-- 先引入 Vue -->
+		<script src="https://unpkg.com/vue/dist/vue.js"></script>
+		<!-- 引入组件库 -->
+		<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+		<!-- 引入jquery库 -->
+		<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="log">
+			<template>
+				<el-table :data="logs" height="500" border :row-style="show" style="width: 100%">
+					<el-table-column prop="application" label="应用" width="180">
+					</el-table-column>
+					<el-table-column prop="level" label="级别" width="80">
+					</el-table-column>
+					<el-table-column prop="loggerName" label="名称" width="350">
+					</el-table-column>
+					<el-table-column prop="message" label="内容">
+					</el-table-column>
+					<el-table-column prop="logTime" label="时间" width="180">
+					</el-table-column>
+				</el-table>
+				<div class="pagination">
+					<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="10" layout="total, sizes, prev, pager, next, jumper" :total="4000">
+
+					</el-pagination>
+				</div>
+			</template>
+		</div>
+		<style>
+			.handle-box {
+				margin-bottom: 20px;
+			}
+			
+			.toolbar {
+				margin: 5px 0;
+			}
+			
+			.pagination {
+				margin: 20px 0;
+				text-align: center;
+			}
+		</style>
+		<script>
+			var log = new Vue({
+				el: "#log",
+				data: {
+					currentPage: 1,
+					logs: [{
+							application: "spedily-test",
+							level: "INFO",
+							logTime: "2018-01-10 12:00:01",
+							loggerName: "com.gbiac.spedily.rule.controller.TestController",
+							message: "test"
+						},
+						{
+							application: "spedily-test",
+							level: "INFO",
+							logTime: "2018-01-10 12:00:01",
+							loggerName: "com.gbiac.spedily.rule.controller.TestController",
+							message: "test"
+						},
+						{
+							application: "spedily-test",
+							level: "INFO",
+							logTime: "2018-01-10 12:00:01",
+							loggerName: "com.gbiac.spedily.rule.controller.TestController",
+							message: "test"
+						},
+						{
+							application: "spedily-test",
+							level: "ERROR",
+							logTime: "2018-01-10 12:00:01",
+							loggerName: "com.gbiac.spedily.rule.controller.TestController",
+							message: "test"
+						},
+						{
+							application: "spedily-test",
+							level: "INFO",
+							logTime: "2018-01-10 12:00:01",
+							loggerName: "com.gbiac.spedily.rule.controller.TestController",
+							message: "test"
+						},
+						{
+							application: "spedily-test",
+							level: "INFO",
+							logTime: "2018-01-10 12:00:01",
+							loggerName: "com.gbiac.spedily.rule.controller.TestController",
+							message: "test"
+						},
+						{
+							application: "spedily-test",
+							level: "INFO",
+							logTime: "2018-01-10 12:00:01",
+							loggerName: "com.gbiac.spedily.rule.controller.TestController",
+							message: "test"
+						},
+						{
+							application: "spedily-test",
+							level: "DEBUG",
+							logTime: "2018-01-10 12:00:01",
+							loggerName: "com.gbiac.spedily.rule.controller.TestController",
+							message: "test"
+						},
+						{
+							application: "spedily-test",
+							level: "ERROR",
+							logTime: "2018-01-10 12:00:01",
+							loggerName: "com.gbiac.spedily.rule.controller.TestController",
+							message: "test"
+						},
+						{
+							application: "spedily-test",
+							level: "INFO",
+							logTime: "2018-01-10 12:00:01",
+							loggerName: "com.gbiac.spedily.rule.controller.TestController",
+							message: "test"
+						},
+						{
+							application: "spedily-test",
+							level: "DEBUG",
+							logTime: "2018-01-10 12:00:01",
+							loggerName: "com.gbiac.spedily.rule.controller.TestController",
+							message: "test"
+						},
+						{
+							application: "spedily-test",
+							level: "INFO",
+							logTime: "2018-01-10 12:00:01",
+							loggerName: "com.gbiac.spedily.rule.controller.TestController",
+							message: "test"
+						}
+					]
+				},
+				methods: {
+					// 不同的日记级别（level）以不同的颜色显示
+					show: function(row, rowIndex) {
+						// 将级别为错误（ERROR）的一列显示为红色
+						if(row.row.level === 'ERROR') {
+							return "color: red"
+						}
+						// INFO为黑色
+						if(row.row.level === 'INFO') {
+							return "color: black"
+						}
+						// DEBUG为绿色
+						if(row.row.level === 'DEBUG') {
+							return "color: green"
+						}
+					},
+					/********************************分页操作*******************************************/
+					handleSizeChange: function(val) {
+						console.log("每页 ${val} 条");
+					},
+					handleCurrentChange: function(val) {
+						console.log("当前页: ${val}");
+					},
+					/********************************分页操作*******************************************/
+				}
+			})
+		</script>
+
+	</body>
+
+</html>
