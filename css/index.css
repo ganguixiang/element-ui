@@ -1,31 +1,32 @@
 * {
-	margin: 0;
-	padding: 0;
+    margin: 0;
+    padding: 0;
 }
 .header {
-	position: relative;
-	box-sizing: border-box;
-	width: 100%;
-	height: 70px;
-	font-size: 22px;
-	line-height: 70px;
-	color: #fff;
-	background-color: #242f42;
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    height: 70px;
+    color: #fff;
+    background-color: #242f42;
 }
 
 .header .logo {
-	float: left;
-	width: 250px;
-	text-align: center;
+    float: left;
+    width: 250px;
+    font-size: 22px;
+    line-height: 70px;
+    text-align: center;
+}
+
+.header .user {
+    float: right;
+    width: 250px;
+    line-height: 70px;
 }
 
 #sidebar {
-	/*display: inline-block;
-	width: 220px;
-	background-color: #324157;
-	overflow-y: auto;
-	overflow-x: hidden;*/
-	display: block;
+    display: block;
     position: absolute;
     width: 250px;
     left: 0;
@@ -34,10 +35,7 @@
     background: #324157;
 }
 #tabs {
-	/*display: inline-block;
-	position: absolute;
-	padding-left: 2px;*/
-	background: none repeat scroll 0 0 #fff;
+    background: none repeat scroll 0 0 #fff;
     position: absolute;
     left: 250px;
     right: 0;
@@ -49,12 +47,18 @@
     overflow-y: scroll;
 }
 .content {
-	padding-left: 10px;
+    padding-left: 10px;
 }
-.footer {
-	width: 100%;
-	height: 50px;
-	background-color: black;
-	color: white;
-	text-align: center;
+.handle-box {
+    /*margin-bottom: 20px;*/
+}
+.toolbar {
+    margin: 5px 0;
+}
+.pagination {
+    margin: 20px 0;
+    text-align: center;
+}
+.el-button+.el-button {
+    margin-left: 0;
 }

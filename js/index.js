@@ -2,18 +2,11 @@ var index = new Vue({
 	el: '#index',
 	data: {
 		activeTabId: '1',
-		tabs: [{
-			id: '1',
-			name: '首页',
-			content: '首页'
-		}],
+		tabs: [],
 	},
 	mounted: function() {
-//				initWindow();
-				window.onresize = function() {
-					console.log('window.onresize');
-//					initWindow()
-				}
+				// 加载首页
+				this.addTab('1','首页', 'page/index.html')
 			},
 	methods: {
 		handleOpen: function(key, keyPath) {
